@@ -1,0 +1,46 @@
+<!-- For Success Dialog Panel Style or Design as overlay -->
+<Grid x:Name="SuccessDialog"
+      BackgroundColor="#80000080"
+      IsVisible="False"
+      Padding="0"
+      RowSpacing="0"
+      ColumnSpacing="0"
+      ZIndex="101"
+      Grid.RowSpan="3">
+    <Border
+        Background="{StaticResource CardGradient}"
+        StrokeThickness="0"
+        StrokeShape="RoundRectangle 28"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Margin="0">
+        <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+            <Grid Padding="0" Margin="0,0,0,0">
+                <Border BackgroundColor="Transparent" StrokeThickness="0">
+                    <Image Source="success.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                </Border>
+            </Grid>
+            <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                <Label x:Name="SuccessTitle" Text="Deleted"
+                       FontSize="22" FontAttributes="Bold"
+                       TextColor="#00C853"
+                       HorizontalOptions="Center"/>
+                <Label x:Name="SuccessMessage" Text="Leaderboard info for user has been deleted."
+                       FontSize="16"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"/>
+                <Button Text="OK"
+                        Clicked="OnSuccessDialogClose"
+                        BackgroundColor="#00C853"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="16"
+                        HeightRequest="48"
+                        WidthRequest="100"
+                        Margin="0,16,0,0"
+                        Shadow="{StaticResource FrameShadow}"/>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </Border>
+</Grid>
