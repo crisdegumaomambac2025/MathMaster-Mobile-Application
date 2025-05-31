@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.Views.LoginHistoryPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#262525">
+
+    <ContentPage.Resources>
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#3A3F5C" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CardGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#2B5876" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Shadow effect -->
+        <Shadow x:Key="FrameShadow" Brush="#000000" Offset="0,4" Radius="12" Opacity="0.25"/>
+        <!-- Font styles -->
+        <Style TargetType="Label" x:Key="TitleLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+        </Style>
+        <Style TargetType="Label" x:Key="HistoryLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+        </Style>
+        <Style TargetType="Frame" x:Key="HistoryCard">
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Shadow" Value="{StaticResource FrameShadow}"/>
+            <Setter Property="Background" Value="{StaticResource CardGradient}"/>
+            <Setter Property="BorderColor" Value="#FFB600"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid RowDefinitions="Auto, *, Auto">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Padding="20" Spacing="16" Background="{StaticResource HeaderGradient}">
+            <Label Text="User Login History"
+                   Style="{StaticResource TitleLabel}"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Login History List -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="10" BackgroundColor="#191C30">
+                <CollectionView x:Name="LoginHistoryCollectionView" ItemsSource="{Binding LoginHistoryList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Style="{StaticResource HistoryCard}">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="{Binding Username}" TextColor="#FFB600" FontAttributes="Bold" FontSize="16" FontFamily="Comic Sans MS"/>
+                                    <Label Text="{Binding LoginTime}" TextColor="#FFFFFF" FontSize="14" FontFamily="Comic Sans MS"/>
+                                    <Label Text="{Binding IPAddress}" TextColor="#B0B0B0" FontSize="14" FontFamily="Comic Sans MS"/>
+                                    <Label Text="{Binding DeviceType}" TextColor="#B0B0B0" FontSize="14" FontFamily="Comic Sans MS"/>
+                                    <Label Text="{Binding Location}" TextColor="#B0B0B0" FontSize="14" FontFamily="Comic Sans MS"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Footer and Bottom Navigation (Enhanced, .NET 9 compatible, matches AdminPage) -->
+        <Border Grid.Row="2"
+                HeightRequest="80"
+                StrokeThickness="0"
+                Margin="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#23243A" Offset="0.0"/>
+                    <GradientStop Color="#1A237E" Offset="0.5"/>
+                    <GradientStop Color="#FFD700" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Padding="10,0" VerticalOptions="Center" HeightRequest="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Manage Users -->
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="manage_user.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Manage Users" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnManageUsersClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Login History -->
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="history.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Login History" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLoginHistoryClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Ranking -->
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="leaderboard.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Ranking" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRankingClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Home -->
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="home.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Home" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHomeClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+    </Grid>
+    <!-- Loading Overlay -->
+    <Grid x:Name="LoadingOverlay"
+          BackgroundColor="#80000080"
+          IsVisible="False"
+          VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand"
+          ZIndex="200">
+        <ActivityIndicator IsRunning="True" Color="#00C6FF" WidthRequest="60" HeightRequest="60" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+    </Grid>
+</ContentPage>

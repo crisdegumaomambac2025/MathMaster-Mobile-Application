@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.Views.LeaderboardPage"
+             BackgroundColor="#191C30"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#3A3F5C" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="FrameGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#2B5876" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Shadow effect -->
+        <Shadow x:Key="FrameShadow" Brush="#000000" Offset="0,4" Radius="12" Opacity="0.25"/>
+        <!-- Font styles -->
+        <Style TargetType="Label" x:Key="TitleLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+        </Style>
+        <Style TargetType="Label" x:Key="SectionLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFFFFF"/>
+        </Style>
+        <Style TargetType="Frame" x:Key="RoundedFrame">
+            <Setter Property="CornerRadius" Value="30"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Shadow" Value="{StaticResource FrameShadow}"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        <Style TargetType="Image" x:Key="RoundedImage">
+            <Setter Property="Aspect" Value="AspectFill"/>
+            <Setter Property="HeightRequest" Value="75"/>
+            <Setter Property="WidthRequest" Value="75"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <!-- Leaderboard Card Style -->
+        <Style TargetType="Frame" x:Key="LeaderboardCard">
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Shadow" Value="{StaticResource FrameShadow}"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#23243A" Offset="0.0"/>
+                        <GradientStop Color="#2B5876" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderColor" Value="#FFB600"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid RowDefinitions="Auto, *, Auto" BackgroundColor="#191C30">
+        <!-- User Rank Display (centered, above footer) -->
+        <Grid Grid.Row="1" VerticalOptions="End" HorizontalOptions="Center" Padding="0,0,0,0" ZIndex="100">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                <Image x:Name="UserRankImage" IsVisible="False" HeightRequest="36" WidthRequest="36" />
+                <Label x:Name="UserRankLabel" Text="Rank: N/A" FontSize="18" TextColor="#FFD700" FontAttributes="Bold" IsVisible="True" />
+            </HorizontalStackLayout>
+        </Grid>
+        <VerticalStackLayout Padding="20">
+            <VerticalStackLayout>
+                <Grid Grid.Row="0" Background="{StaticResource HeaderGradient}">
+                    <Frame Padding="10"
+                       Background="{StaticResource HeaderGradient}"
+                       BorderColor="Transparent"
+                       CornerRadius="40"
+                       HasShadow="True">
+                        <Image Source="top_10.png" WidthRequest="75"/>
+                    </Frame>
+                    <Frame Background="{StaticResource HeaderGradient}"
+                           BorderColor="Transparent"
+                           WidthRequest="50" 
+                           HeightRequest="50"
+                           CornerRadius="25"
+                           HorizontalOptions="End" 
+                           Padding="0" 
+                           VerticalOptions="Start"
+                           HasShadow="True">
+                        <Image Source="setting.png" HeightRequest="30" WidthRequest="30">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSettingsTapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Frame>
+                </Grid>
+            </VerticalStackLayout>
+            <ScrollView>
+                <CollectionView x:Name="LeaderboardCollectionView"
+                        ItemsLayout="VerticalList"
+                        Margin="0,10">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Style="{StaticResource LeaderboardCard}">
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <!-- Rank Display: Image for top 3, Label for rest -->
+                                        <Grid WidthRequest="30" HeightRequest="30">
+                                            <Image Source="{Binding RankImage}" 
+                                           IsVisible="{Binding IsImageRank}" 
+                                           WidthRequest="{Binding RankImageSize}" 
+                                           HeightRequest="{Binding RankImageSize}" 
+                                           Aspect="AspectFit"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"/>
+
+                                            <Label Text="{Binding RankNumber}" 
+                                           IsVisible="{Binding IsNumberRank}" 
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="Center"
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           TextColor="#FFB600"/>
+                                        </Grid>
+
+                                        <Label Text="{Binding FullName}" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       Margin="10,0,0,0"
+                                       TextColor="#FFFFFF"/>
+                                    </HorizontalStackLayout>
+
+                                    <Label Text="{Binding Username}" FontSize="14" TextColor="#B0B0B0"/>
+                                    <Label FontSize="14" TextColor="#FFB600">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Total Score: " TextColor="#FFFFFF"/>
+                                                <Span Text="{Binding TotalScore}" FontAttributes="Bold" TextColor="#FFB600"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </VerticalStackLayout>
+        <Border Grid.Row="2"
+                HeightRequest="80"
+                StrokeThickness="0"
+                Margin="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#23243A" Offset="0.0"/>
+                    <GradientStop Color="#1A237E" Offset="0.5"/>
+                    <GradientStop Color="#FFD700" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Padding="10,0" VerticalOptions="Center" HeightRequest="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Topics Button -->
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="topics.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Topics" FontSize="13" TextColor="#FFD700" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTopicsTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Quizzes Button -->
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="quiz.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Quizzes" FontSize="13" TextColor="#FFD700" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnQuizTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Leaderboard Button -->
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="leaderboard.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Leaderboard" FontSize="13" TextColor="#FFD700" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLeaderboardTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Profile Button -->
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="home.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Home" FontSize="13" TextColor="#FFD700" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHomeTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+    </Grid>
+    <!-- Loading Overlay -->
+    <Grid x:Name="LoadingOverlay"
+      BackgroundColor="#80000080"
+      IsVisible="False"
+      VerticalOptions="FillAndExpand"
+      HorizontalOptions="FillAndExpand"
+      ZIndex="200">
+        <ActivityIndicator IsRunning="True" Color="#00C6FF" WidthRequest="60" HeightRequest="60" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+    </Grid>
+</ContentPage>

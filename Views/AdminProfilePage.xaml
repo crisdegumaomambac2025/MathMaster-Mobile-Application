@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.Views.AdminProfilePage"
+             Shell.BackgroundColor="#191C30"
+             Shell.ForegroundColor="White"
+             BackgroundColor="#191C30">
+
+    <Grid>
+        <ScrollView>
+        <VerticalStackLayout Padding="0,40,0,0" Spacing="0" BackgroundColor="#191C30">
+
+            <!-- Profile Card -->
+            <Frame Margin="20,0" Padding="0" CornerRadius="30" HasShadow="True" BackgroundColor="#23244D" >
+                <VerticalStackLayout Padding="0,30,0,30" Spacing="18" HorizontalOptions="Center">
+
+                    <!-- Profile Image with Border -->
+                    <Frame WidthRequest="120" HeightRequest="120" CornerRadius="60"
+                           BackgroundColor="#2D2F5A" BorderColor="#007BFF"
+                           HorizontalOptions="Center" HasShadow="True" Padding="5">
+                        <Image Source="profilex.png" WidthRequest="100" HeightRequest="100" Aspect="AspectFill" />
+                    </Frame>
+
+                    <!-- Profile Name -->
+                    <Label x:Name="ProfileNameLabel"
+                           Text="Admin User"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center" />
+
+                    <!-- Profile Email (optional, remove if not needed) -->
+                    <Label x:Name="ProfileEmailLabel"
+                           Text="admin@email.com"
+                           FontSize="15"
+                           TextColor="#B0B3C6"
+                           HorizontalOptions="Center" />
+
+                    <!-- Divider -->
+                    <BoxView HeightRequest="1" WidthRequest="180" Color="#35376A" HorizontalOptions="Center" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <VerticalStackLayout Padding="30,25,30,0" Spacing="18">
+
+                <!-- Manage Users Button -->
+                <Frame CornerRadius="15" HasShadow="False" Padding="0" BackgroundColor="#007BFF">
+                    <Grid Padding="10" ColumnDefinitions="Auto,*,Auto">
+                        <Image Source="manage_user.png" HeightRequest="28" WidthRequest="28" VerticalOptions="Center"/>
+                        <Label Text="Manage Users"
+                               Grid.Column="1"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                        <BoxView Grid.Column="2" WidthRequest="0"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnManageUsersClicked"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Frame>
+
+                <!-- Settings Button -->
+                <Frame CornerRadius="15" HasShadow="False" Padding="0" BackgroundColor="#4CAF50">
+                    <Grid Padding="10" ColumnDefinitions="Auto,*,Auto">
+                        <Image Source="setting.png" HeightRequest="28" WidthRequest="28" VerticalOptions="Center"/>
+                        <Label Text="Settings"
+                               Grid.Column="1"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                        <BoxView Grid.Column="2" WidthRequest="0"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAdminSettingsClicked"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Frame>
+
+                <!-- Logout Button -->
+                <Frame CornerRadius="15" HasShadow="False" Padding="0" BackgroundColor="#FF4B5C">
+                    <Grid Padding="10" ColumnDefinitions="Auto,*,Auto">
+                        <Image Source="logout.png" HeightRequest="28" WidthRequest="28" VerticalOptions="Center"/>
+                        <Label Text="Logout"
+                               Grid.Column="1"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                        <BoxView Grid.Column="2" WidthRequest="0"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLogoutClicked"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Frame>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+    <!-- Loading Overlay -->
+    <Grid x:Name="LoadingOverlay"
+          BackgroundColor="#80000080"
+          IsVisible="False"
+          VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand"
+          ZIndex="200">
+        <ActivityIndicator IsRunning="True" Color="#00C6FF" WidthRequest="60" HeightRequest="60" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+    <!-- Custom Logout Confirm Dialog Overlay -->
+    <Grid x:Name="LogoutConfirmPanel"
+          BackgroundColor="#80000080"
+          IsVisible="False"
+          Padding="0"
+          RowSpacing="0"
+          ColumnSpacing="0"
+          ZIndex="101">
+        <Border
+            BackgroundColor="#23244D"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 28"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Margin="0">
+            <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                <Grid Padding="10" Margin="0,0,0,0">
+                    <Border BackgroundColor="Transparent" StrokeThickness="0">
+                        <Image Source="warning.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                    </Border>
+                </Grid>
+                <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                    <Label Text="Confirm Logout"
+                           FontSize="22" FontAttributes="Bold"
+                           TextColor="#FF5858"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Are you sure you want to log out?"
+                           FontSize="16"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"/>
+                    <HorizontalStackLayout Spacing="16" Margin="0,16,0,0" HorizontalOptions="Center">
+                        <Button Text="Yes"
+                                Clicked="OnConfirmLogoutYes"
+                                BackgroundColor="#FF5858"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"/>
+                        <Button Text="Cancel"
+                                Clicked="OnConfirmLogoutCancel"
+                                BackgroundColor="#B0B0B0"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+    </Grid>
+</ContentPage>

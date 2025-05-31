@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.StudentPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#191C30">
+
+    <ContentPage.Resources>
+        <!-- Gradient backgrounds -->
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#3A3F5C" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="FrameGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#2B5876" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="FooterGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFFFFF" Offset="0.0"/>
+            <GradientStop Color="#F3F3F3" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Shadow effect -->
+        <Shadow x:Key="FrameShadow" Brush="#000000" Offset="0,4" Radius="12" Opacity="0.25"/>
+        <!-- Font styles -->
+        <Style TargetType="Label" x:Key="TitleLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+        </Style>
+        <Style TargetType="Label" x:Key="SectionLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFFFFF"/>
+        </Style>
+        <Style TargetType="Frame" x:Key="RoundedFrame">
+            <Setter Property="CornerRadius" Value="30"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Shadow" Value="{StaticResource FrameShadow}"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        <Style TargetType="Image" x:Key="RoundedImage">
+            <Setter Property="Aspect" Value="AspectFill"/>
+            <Setter Property="HeightRequest" Value="75"/>
+            <Setter Property="WidthRequest" Value="75"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <!-- Level Up Dialog Gradient -->
+        <LinearGradientBrush x:Key="LevelUpGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFD700" Offset="0.0"/>
+            <GradientStop Color="#FFA500" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid RowDefinitions="Auto, * , Auto">
+
+        <!-- Background overlay to cover the entire page -->
+        <BoxView x:Name="BackgroundOverlay"
+                 Color="Black"
+                 IsVisible="False"
+                 Opacity="0"
+                 HorizontalOptions="FillAndExpand"
+                 VerticalOptions="FillAndExpand"
+                 ZIndex="998" />
+
+        <!-- Header Navigation (Top Bar) -->
+        <Grid Grid.Row="0" Padding="15,15,15,15" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Frame Background="{StaticResource HeaderGradient}"
+                   BorderColor="Transparent"
+                   Style="{StaticResource RoundedFrame}">
+                <StackLayout VerticalOptions="Start" HorizontalOptions="Center">
+
+                    <!-- Profile Icon -->
+                    <Frame Padding="0" CornerRadius="40" HasShadow="True" BackgroundColor="#23243A" Margin="0,10,0,5">
+                        <Image Source="level.png"
+                           Style="{StaticResource RoundedImage}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Grid.Row="0"/>
+                    </Frame>
+
+                    <!-- New Level Label -->
+                    <Label x:Name="StudentLevelLabel"
+                       Text="LEVEL 1"
+                       Style="{StaticResource TitleLabel}"
+                       HorizontalOptions="Center"
+                       Grid.Row="1"/>
+
+                    <BoxView HeightRequest="2"
+                         Color="#FFC107"
+                         HorizontalOptions="Fill"
+                         Margin="0,10"/>
+                </StackLayout>
+            </Frame>
+            <Frame Background="{StaticResource HeaderGradient}"
+                   BorderColor="Transparent"
+                   WidthRequest="50" 
+                   HeightRequest="50"
+                   CornerRadius="25"
+                   HorizontalOptions="End" 
+                   Padding="0" 
+                   VerticalOptions="Start"
+                   HasShadow="True">
+                <Image Source="setting.png" HeightRequest="30" WidthRequest="30">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSettingsTapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Frame>
+        </Grid>
+
+        <!-- Scrollable Main Content -->
+        <ScrollView x:Name="MainScrollView" Grid.Row="1">
+            <Frame Background="{StaticResource FrameGradient}" BorderColor="Transparent" CornerRadius="35" Margin="0,10" HasShadow="True" Padding="0">
+                <VerticalStackLayout Padding="20"  Spacing="18"
+                                     VerticalOptions="FillAndExpand"
+                                     HorizontalOptions="FillAndExpand">
+
+                    <!-- Main Menu Buttons (with gradients, shadows, rounded corners) -->
+                    <Frame WidthRequest="100"
+                           HeightRequest="100" 
+                           HorizontalOptions="Center"
+                           CornerRadius="30"
+                           HasShadow="True"
+                           BackgroundColor="#A2DFF7">
+                        <Image Source="think.png" HeightRequest="70" WidthRequest="70">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMentalMathTapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Frame>
+                    <Label Text="Mental Math" HorizontalOptions="Center" 
+                           Style="{StaticResource SectionLabel}"/>
+
+                    <Grid RowDefinitions="Auto">
+                        <Frame HorizontalOptions="Start"
+                               Grid.Column="0"
+                               WidthRequest="100"
+                               HeightRequest="100"
+                               CornerRadius="30"
+                               HasShadow="True"
+                               BackgroundColor="#A8E6A1">
+                            <Image Source="blackboard.png" HeightRequest="70" WidthRequest="70">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAdditionSubtractionTapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+
+                        <Frame HorizontalOptions="End"
+                               Grid.Column="0"
+                               WidthRequest="100"
+                               HeightRequest="100"
+                               CornerRadius="30"
+                               HasShadow="True"
+                               BackgroundColor="#FFDD57">
+                            <Image Source="multiplication.png" HeightRequest="70" WidthRequest="70">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnMultiplicationTableTapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                    </Grid>
+
+                    <Grid>
+                            <Label Text="Addition and&#x0a; Subtraction " 
+                               HorizontalOptions="Start"
+                               HorizontalTextAlignment="Center" 
+                               Style="{StaticResource SectionLabel}"/>
+
+                        <Label Text="Multiplication&#x0a;Table" 
+                               HorizontalOptions="End"
+                               HorizontalTextAlignment="Center" 
+                               Style="{StaticResource SectionLabel}"/>
+                    </Grid>
+
+                    <Frame WidthRequest="100"
+                           HeightRequest="100" 
+                           HorizontalOptions="Center" 
+                           CornerRadius="30"
+                           HasShadow="True"
+                           BackgroundColor="#FF7F50">
+                        <Image Source="square_root.png" HeightRequest="70" WidthRequest="70">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnExponentsAndRootsTapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Frame>
+
+                    <Label Text="Exponents and&#x0a;Roots" 
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" 
+                           Style="{StaticResource SectionLabel}"/>
+
+                    <Grid RowDefinitions="Auto">
+                        <Frame HorizontalOptions="Start"
+                               Grid.Column="0"
+                               WidthRequest="100"
+                               HeightRequest="100"
+                               CornerRadius="30"
+                               HasShadow="True"
+                               BackgroundColor="#D32F2F">
+                            <Image Source="fraction.png" HeightRequest="70" WidthRequest="70">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnDecimalsAndFractionsTapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+
+                        <Frame HorizontalOptions="End"
+                               Grid.Column="0"
+                               WidthRequest="100"
+                               HeightRequest="100"
+                               CornerRadius="30"
+                               HasShadow="True"
+                               BackgroundColor="#8E24AA">
+                            <Image Source="algebra.png" HeightRequest="70" WidthRequest="70">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAlgebraTapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                    </Grid>
+
+                    <Grid>
+                        <Label Text="Decimals and&#x0a;Fractions"
+                               HorizontalOptions="Start"
+                               HorizontalTextAlignment="Center" 
+                               Style="{StaticResource SectionLabel}"/>
+
+                        <Label Text="Algebra"
+                               HorizontalOptions="End"
+                               HorizontalTextAlignment="Center" 
+                               Margin="0,0,21,0" 
+                               Style="{StaticResource SectionLabel}"/>
+                    </Grid>
+
+                    <Frame WidthRequest="100"
+                           HeightRequest="100" 
+                           HorizontalOptions="Center"
+                           CornerRadius="30"
+                           HasShadow="True"
+                           BackgroundColor="#2E7D32">
+                        <Image Source="operations.png" HeightRequest="70" WidthRequest="70">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNumbersOperationsTapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Frame>
+
+                    <Label Text="Numbers and &#x0a;Operations" 
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" 
+                           Style="{StaticResource SectionLabel}"/>
+
+                    <Grid RowDefinitions="Auto">
+                        <Frame HorizontalOptions="Start"
+                               Grid.Column="0"
+                               WidthRequest="100"
+                               HeightRequest="100"
+                               CornerRadius="30"
+                               HasShadow="True"
+                               BackgroundColor="#0288D1">
+                            <Image Source="geometry.png" HeightRequest="70" WidthRequest="70">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnGeometryTapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+
+                        <Frame HorizontalOptions="End"
+                               Grid.Column="0"
+                               WidthRequest="100"
+                               HeightRequest="100"
+                               CornerRadius="30"
+                               HasShadow="True"
+                               BackgroundColor="#7C4DFF">
+                            <Image Source="geometric.png" HeightRequest="70" WidthRequest="70">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnGeometricSolidTapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                    </Grid>
+
+                    <Grid>
+                        <Label Text="Geometry"
+                               HorizontalOptions="Start"
+                               HorizontalTextAlignment="Center" 
+                               Margin="8.5,0,0,0" 
+                               Style="{StaticResource SectionLabel}" />
+
+                        <Label Text="Geometric&#x0a;Solid"
+                               HorizontalOptions="End"
+                               HorizontalTextAlignment="Center" 
+                               Margin="0,0,10,0" 
+                               Style="{StaticResource SectionLabel}"/>
+                    </Grid>
+                    <Frame WidthRequest="100"
+                           HeightRequest="100" 
+                           HorizontalOptions="Center"
+                           CornerRadius="30"
+                           HasShadow="True"
+                           BackgroundColor="#6A1B9A">
+                        <Image Source="conversion_unit.png" HeightRequest="70" WidthRequest="70">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnConversionOfUnitsTapped" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Frame>
+
+                    <Label Text="Conversion of &#x0a;units" 
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" 
+                           Style="{StaticResource SectionLabel}"/>
+
+                </VerticalStackLayout>
+            </Frame>
+        </ScrollView>
+
+        <!-- Bottom Navigation Footer -->
+        <Border Grid.Row="2"
+                HeightRequest="80"
+                StrokeThickness="0"
+                Margin="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#23243A" Offset="0.0"/>
+                    <GradientStop Color="#1A237E" Offset="0.5"/>
+                    <GradientStop Color="#FFD700" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Background="{StaticResource FrameGradient}" Padding="10,0" VerticalOptions="Center" HeightRequest="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Topics Button -->
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="topics.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Topics" FontSize="13" TextColor="#FFD700" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTopicsTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Quizzes Button -->
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="quiz.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Quizzes" FontSize="13" TextColor="#FFD700" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnQuizTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Leaderboard Button -->
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="leaderboard.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Leaderboard" FontSize="13" TextColor="#FFD700" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLeaderboardTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Home Button -->
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="home.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Home" FontSize="13" TextColor="#FFD700" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHomeTapped" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+        <!-- Level Up Modal Dialog -->
+            <Grid BackgroundColor="#80000000" x:Name="LevelUpModal"
+              InputTransparent="False"
+              IsVisible="False"
+              ZIndex="9999"
+              VerticalOptions="Fill"
+              HorizontalOptions="Fill">
+            <!-- Semi-transparent background overlay -->
+            <BoxView BackgroundColor="#00000000"
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Fill" Margin="0,750,0,0"/>
+
+            <!-- Level Up Content -->
+            <Grid VerticalOptions="Center"
+                  HorizontalOptions="Center">
+                <VerticalStackLayout Spacing="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center">
+                    <Image x:Name="LevelUpImage"
+                           Source="level_up.png"
+                           WidthRequest="300"
+                           HeightRequest="300"
+                           HorizontalOptions="Center"/>
+
+                    <Label x:Name="LevelUpStarsLabel"
+                           Text=""
+                           FontSize="40"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Margin="0,-85,0,0"/>
+
+                    <Button Text="Close"
+                            Clicked="OnLevelUpClose"
+                            BackgroundColor="#1A237E"
+                            TextColor="#FFD700"
+                            FontAttributes="Bold"
+                            CornerRadius="20"
+                            HeightRequest="45"
+                            WidthRequest="120"
+                            HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
+
+        <!-- Level Locked Modal Dialog -->
+        <Grid x:Name="LevelLockedPanel"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              Padding="0"
+              RowSpacing="0"
+              ColumnSpacing="0"
+              ZIndex="10001"
+              Grid.RowSpan="3">
+            <Border
+                Background="{StaticResource FrameGradient}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 28"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="0">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="0" Margin="0">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="warning.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" Margin="0,10,0,0"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="LevelLockedTitle" Text="Level Locked"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#FF5858"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="LevelLockedMessage" Text="You must reach a higher level to unlock this section."
+                               FontSize="16"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <HorizontalStackLayout Spacing="16" Margin="0,16,0,0" HorizontalOptions="Center">
+                            <Button Text="OK"
+                                    Clicked="OnLevelLockedClose"
+                                    BackgroundColor="#FF5858"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="16"
+                                    HeightRequest="48"
+                                    WidthRequest="100"
+                                    Shadow="{StaticResource FrameShadow}"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+    <!-- Loading Overlay -->
+    <Grid x:Name="LoadingOverlay"
+          BackgroundColor="#80000080"
+          IsVisible="False"
+          VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand"
+          ZIndex="200">
+        <ActivityIndicator IsRunning="True" Color="#00C6FF" WidthRequest="60" HeightRequest="60" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+    </Grid>
+</ContentPage>

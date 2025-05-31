@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.AdminPanel"
+             xmlns:sfchart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             BackgroundColor="#191C30"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#3A3F5C" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CardGradientBlue" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#007BFF" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CardGradientGreen" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#28A745" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CardGradientYellow" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#FFC107" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Shadow effect -->
+        <Shadow x:Key="FrameShadow" Brush="#000000" Offset="0,4" Radius="12" Opacity="0.25"/>
+        <!-- Font styles -->
+        <Style TargetType="Label" x:Key="TitleLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+        </Style>
+        <Style TargetType="Label" x:Key="SectionLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFFFFF"/>
+        </Style>
+        <Style TargetType="Frame" x:Key="InfoCardFrame">
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Shadow" Value="{StaticResource FrameShadow}"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Header -->
+        <Grid Grid.Row="0" Background="{StaticResource HeaderGradient}" Padding="15,15,15,0">
+            <StackLayout VerticalOptions="Start" HorizontalOptions="Center">
+                <!-- Title -->
+                <Label Text="Admin Dashboard"
+                       Style="{StaticResource TitleLabel}"
+                       HorizontalOptions="Center" />
+
+                <!-- Profile Icon Underneath -->
+                <Frame Padding="0" CornerRadius="40" HasShadow="True" BackgroundColor="#23243A" Margin="0,10,0,0">
+                    <Image Source="admin.png"
+                           WidthRequest="75"
+                           HeightRequest="75"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Frame>
+
+                <BoxView HeightRequest="2"
+                         Color="#FFC107"
+                         HorizontalOptions="Fill"
+                         Margin="0,10"/>
+            </StackLayout>
+        </Grid>
+
+        <!-- Main Content -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,0,20,20" Spacing="20" BackgroundColor="#191C30">
+                <Label x:Name="AdminNameLabel"
+                       Text="Loading..."
+                       Style="{StaticResource TitleLabel}"
+                       HorizontalOptions="Center" />
+
+                <!-- Info Cards Section -->
+                <Grid RowSpacing="15" ColumnSpacing="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Total Users -->
+                    <Frame Grid.Row="0"
+                           Style="{StaticResource InfoCardFrame}"
+                           Background="{StaticResource CardGradientBlue}"
+                           BorderColor="#007BFF">
+                        <HorizontalStackLayout Spacing="15">
+                            <Image Source="manage_user.png" WidthRequest="40" HeightRequest="40" />
+                            <VerticalStackLayout>
+                                <Label Text="Total Users" FontAttributes="Bold" FontSize="18" TextColor="#FFFFFF" />
+                                <Label x:Name="TotalUsersLabel" Text="0" FontSize="28" FontAttributes="Bold" TextColor="#007BFF" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                    <!-- Recent Login -->
+                    <Frame Grid.Row="1"
+                           Style="{StaticResource InfoCardFrame}"
+                           Background="{StaticResource CardGradientGreen}"
+                           BorderColor="#28A745">
+                        <HorizontalStackLayout Spacing="15">
+                            <Image Source="solo_user.png" WidthRequest="40" HeightRequest="40" />
+                            <VerticalStackLayout>
+                                <Label Text="Recent Login" FontAttributes="Bold" FontSize="18" TextColor="#FFFFFF" />
+                                <Label x:Name="RecentLoginLabel" Text="-" FontSize="18" FontAttributes="Italic" TextColor="#28A745" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                    <!-- New Registered User -->
+                    <Frame Grid.Row="2"
+                           Style="{StaticResource InfoCardFrame}"
+                           Background="{StaticResource CardGradientYellow}"
+                           BorderColor="#FFC107">
+                        <HorizontalStackLayout Spacing="15">
+                            <Image Source="new_user.png" WidthRequest="40" HeightRequest="40" />
+                            <VerticalStackLayout>
+                                <Label Text="New User" FontAttributes="Bold" FontSize="18" TextColor="#FFFFFF" />
+                                <Label x:Name="NewUsersLabel" Text="Loading..." FontSize="18" TextColor="#FFC107" FontAttributes="Italic"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </Grid>
+
+                <!-- Charts Section -->
+                <VerticalStackLayout Spacing="20" Margin="0,20,0,0">
+                    <!-- Recent Logins Bar Chart -->
+                    <Frame Style="{StaticResource InfoCardFrame}" Background="{StaticResource CardGradientGreen}" BorderColor="#28A745">
+                        <VerticalStackLayout>
+                            <Label Text="Recent Logins (Last 5 Days)" FontAttributes="Bold" FontSize="18" TextColor="#FFFFFF" />
+                            <sfchart:SfCartesianChart x:Name="RecentLoginsChart" HeightRequest="180" WidthRequest="320">
+                                <sfchart:SfCartesianChart.XAxes>
+                                    <sfchart:CategoryAxis />
+                                </sfchart:SfCartesianChart.XAxes>
+                                <sfchart:SfCartesianChart.YAxes>
+                                    <sfchart:NumericalAxis />
+                                </sfchart:SfCartesianChart.YAxes>
+                                <sfchart:SfCartesianChart.Series>
+                                    <sfchart:ColumnSeries x:Name="RecentLoginsSeries" ItemsSource="{Binding RecentLoginsData}" XBindingPath="Date" YBindingPath="Count" />
+                                </sfchart:SfCartesianChart.Series>
+                            </sfchart:SfCartesianChart>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <!-- New Users Line Chart -->
+                    <Frame Style="{StaticResource InfoCardFrame}" Background="{StaticResource CardGradientYellow}" BorderColor="#FFC107">
+                        <VerticalStackLayout>
+                            <Label Text="New Users (Last 5 Days)" FontAttributes="Bold" FontSize="18" TextColor="#FFFFFF" />
+                            <sfchart:SfCartesianChart x:Name="NewUsersChart" HeightRequest="180" WidthRequest="320">
+                                <sfchart:SfCartesianChart.XAxes>
+                                    <sfchart:CategoryAxis />
+                                </sfchart:SfCartesianChart.XAxes>
+                                <sfchart:SfCartesianChart.YAxes>
+                                    <sfchart:NumericalAxis />
+                                </sfchart:SfCartesianChart.YAxes>
+                                <sfchart:SfCartesianChart.Series>
+                                    <sfchart:LineSeries x:Name="NewUsersSeries" ItemsSource="{Binding NewUsersData}" XBindingPath="Date" YBindingPath="Count" />
+                                </sfchart:SfCartesianChart.Series>
+                            </sfchart:SfCartesianChart>
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Footer and Bottom Navigation (Enhanced, .NET 9 compatible, fixed properties) -->
+        <Border Grid.Row="2"
+                HeightRequest="80"
+                StrokeThickness="0"
+                Margin="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#23243A" Offset="0.0"/>
+                    <GradientStop Color="#1A237E" Offset="0.5"/>
+                    <GradientStop Color="#FFD700" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Padding="10,0" VerticalOptions="Center" HeightRequest="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Manage Users -->
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="manage_user.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Manage Users" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnManageUsersClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Login History -->
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="history.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Login History" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLoginHistoryClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Ranking -->
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="leaderboard.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Ranking" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRankingClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Profile -->
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="profilex.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Profile" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAdminProfileClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+    </Grid>
+    <!-- Loading Overlay -->
+    <Grid x:Name="LoadingOverlay"
+          BackgroundColor="#80000080"
+          IsVisible="False"
+          VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand"
+          ZIndex="200">
+        <ActivityIndicator IsRunning="True" Color="#00C6FF" WidthRequest="60" HeightRequest="60" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+    <!-- Logout Confirm Dialog Overlay -->
+    <Grid x:Name="LogoutConfirmPanel"
+          BackgroundColor="#80000080"
+          IsVisible="False"
+          Padding="0"
+          RowSpacing="0"
+          ColumnSpacing="0"
+          ZIndex="201">
+        <Border
+            BackgroundColor="#23244D"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 28"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Margin="0">
+            <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                <Grid Padding="10" Margin="0,0,0,0">
+                    <Border BackgroundColor="Transparent" StrokeThickness="0">
+                        <Image Source="warning.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                    </Border>
+                </Grid>
+                <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                    <Label Text="Confirm Logout"
+                           FontSize="22" FontAttributes="Bold"
+                           TextColor="#FF5858"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Are you sure you want to log out?"
+                           FontSize="16"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"/>
+                    <HorizontalStackLayout Spacing="16" Margin="0,16,0,0" HorizontalOptions="Center">
+                        <Button Text="Yes"
+                                Clicked="OnConfirmLogoutYes"
+                                BackgroundColor="#FF5858"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"/>
+                        <Button Text="Cancel"
+                                Clicked="OnConfirmLogoutCancel"
+                                BackgroundColor="#B0B0B0"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+    </Grid>
+</ContentPage>

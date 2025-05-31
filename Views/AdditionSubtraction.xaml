@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.Views.AdditionSubtraction"
+             Shell.BackgroundColor="#191C30"
+             Shell.ForegroundColor="White"
+             BackgroundColor="#191C30">
+
+    <ContentPage.Resources>
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#3A3F5C" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CardGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#2B5876" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="PrimaryButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#2196F3" Offset="0.0"/>
+            <GradientStop Color="#0D47A1" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="SuccessButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#43E97B" Offset="0.0"/>
+            <GradientStop Color="#38F9D7" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="DangerButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF5858" Offset="0.0"/>
+            <GradientStop Color="#FB5895" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="NeutralButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#B0B0B0" Offset="0.0"/>
+            <GradientStop Color="#E0E0E0" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Shadows -->
+        <Shadow x:Key="ButtonShadow" Brush="#000000" Offset="0,2" Radius="10" Opacity="0.18"/>
+        <Shadow x:Key="CardShadow" Brush="#000000" Offset="0,6" Radius="16" Opacity="0.18"/>
+        <Shadow x:Key="FrameShadow" Brush="#000000" Offset="0,2" Radius="10" Opacity="0.18"/>
+        <!-- Button Styles -->
+        <Style TargetType="Button" x:Key="PrimaryButtonStyle">
+            <Setter Property="Background" Value="{StaticResource PrimaryButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="HeightRequest" Value="52"/>
+            <Setter Property="WidthRequest" Value="220"/>
+            <Setter Property="Shadow" Value="{StaticResource ButtonShadow}"/>
+        </Style>
+        <Style TargetType="Button" x:Key="SuccessButtonStyle">
+            <Setter Property="Background" Value="{StaticResource SuccessButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="HeightRequest" Value="52"/>
+            <Setter Property="WidthRequest" Value="120"/>
+            <Setter Property="Shadow" Value="{StaticResource ButtonShadow}"/>
+        </Style>
+        <Style TargetType="Button" x:Key="DangerButtonStyle">
+            <Setter Property="Background" Value="{StaticResource DangerButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="HeightRequest" Value="52"/>
+            <Setter Property="WidthRequest" Value="120"/>
+            <Setter Property="Shadow" Value="{StaticResource ButtonShadow}"/>
+        </Style>
+        <Style TargetType="Button" x:Key="NeutralButtonStyle">
+            <Setter Property="Background" Value="{StaticResource NeutralButtonGradient}"/>
+            <Setter Property="TextColor" Value="#23243A"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="HeightRequest" Value="52"/>
+            <Setter Property="WidthRequest" Value="120"/>
+            <Setter Property="Shadow" Value="{StaticResource ButtonShadow}"/>
+        </Style>
+        <!-- Label Styles -->
+        <Style TargetType="Label" x:Key="QuizTitleLabel">
+            <Setter Property="FontFamily" Value="Segoe UI Bold"/>
+            <Setter Property="FontSize" Value="34"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Label" x:Key="DialogTitleLabel">
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#2196F3"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+        </Style>
+        <Style TargetType="Label" x:Key="DialogMessageLabel">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- Gradient Background -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#23243a" Offset="0.0" />
+            <GradientStop Color="#191C30" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid>
+        <!-- Main Quiz UI -->
+        <VerticalStackLayout Padding="20" Spacing="30" VerticalOptions="Center" HorizontalOptions="Center">
+            <Border Background="{StaticResource CardGradient}"
+                   StrokeThickness="0"
+                   StrokeShape="RoundRectangle 24"
+                   Padding="32"
+                   WidthRequest="370"
+                   HorizontalOptions="Center"
+                   Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout x:Name="QuizCard" Spacing="28">
+                    <ProgressBar x:Name="QuestionProgressBar"
+                                 Progress="0"
+                                 HeightRequest="8"
+                                 BackgroundColor="#23243A"
+                                 ProgressColor="#FFB600"
+                                 Margin="0,0,0,10"
+                                 HorizontalOptions="FillAndExpand"/>
+                    <Label x:Name="QuestionLabel"
+                           Style="{StaticResource QuizTitleLabel}"
+                           Text="Question goes here"/>
+                    <Label Text="Choose the correct answer:"
+                           FontSize="22"
+                           HorizontalTextAlignment="Center"
+                           TextColor="#B3FFFFFF" />
+                    <!-- Grid Layout for choices as Buttons -->
+                    <Grid x:Name="ChoicesGrid" 
+                          ColumnDefinitions="*,*" 
+                          RowDefinitions="*,*" 
+                          HorizontalOptions="Center" 
+                          VerticalOptions="Center"
+                          ColumnSpacing="18"
+                          RowSpacing="22"
+                          Padding="10">
+                        <!-- Choice buttons are generated in code-behind -->
+                    </Grid>
+                    <Button Text="🧮 Open Calculator"
+                            Clicked="OnCalculatorClicked"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Margin="0,10,0,0"/>
+                    <Button Text="Next"
+                            x:Name="NextButton"
+                            Clicked="OnNextQuestionClicked"
+                            Style="{StaticResource SuccessButtonStyle}"/>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- Warning Modal -->
+        <Grid x:Name="WarningModal" IsVisible="False" BackgroundColor="#80000000" ZIndex="1000">
+            <Border BackgroundColor="White" StrokeShape="RoundRectangle 16" StrokeThickness="0" Margin="20" Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="⚠️ Warning" FontSize="24" FontAttributes="Bold" TextColor="#E53935" HorizontalOptions="Center" />
+                    <Label Text="Please select an answer before proceeding." FontSize="18" TextColor="#23243a" HorizontalOptions="Center" />
+                    <Button Text="OK" Clicked="OnErrorDialogClose" BackgroundColor="#E53935" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="45" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Quiz Review Modal -->
+        <Grid x:Name="ReviewModal"
+              IsVisible="False"
+              Opacity="0"
+              BackgroundColor="#B3000000"
+              ZIndex="1000">
+            <Border Background="#f7fafc"
+                   StrokeThickness="0"
+                   StrokeShape="RoundRectangle 28"
+                   Padding="0"
+                   WidthRequest="370"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout Spacing="0">
+                    <!-- Header -->
+                    <Grid BackgroundColor="#2196F3" Padding="0,18,0,18">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="trophy.png" HeightRequest="32" WidthRequest="32" Grid.Column="0" HorizontalOptions="Center"/>
+                        <Label Text="Quiz Review"
+                               Style="{StaticResource DialogTitleLabel}"
+                               Grid.Column="1"/>
+                        <Image Source="math.png" HeightRequest="32" WidthRequest="32" Grid.Column="2" HorizontalOptions="Center"/>
+                    </Grid>
+                    <!-- Content -->
+                    <ScrollView HeightRequest="340" BackgroundColor="Transparent" Padding="0,10,0,0">
+                        <VerticalStackLayout x:Name="ReviewStack" Spacing="12" Padding="18,0,18,0"/>
+                    </ScrollView>
+                    <!-- Footer -->
+                    <Grid Padding="0,18,0,18" BackgroundColor="Transparent">
+                        <Button Text="Close"
+                                Clicked="OnCloseReviewModalClicked"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                WidthRequest="140"
+                                HeightRequest="48"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Ready Dialog (Updated Style) -->
+        <Grid x:Name="ReadyDialog"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              ZIndex="100">
+            <Border
+                Background="{StaticResource CardGradient}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 28"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="0"
+                Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="20" Margin="0,0,0,0">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="blackboard.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label Text="Ready to Begin?"
+                               Style="{StaticResource DialogTitleLabel}"/>
+                        <Label Text="Embark on your learning journey by starting the quiz. Are you ready to challenge yourself?"
+                               Style="{StaticResource DialogMessageLabel}"/>
+                        <HorizontalStackLayout Spacing="16" Margin="0,16,0,0" HorizontalOptions="Center">
+                            <Button Text="Yes, Let's Go!"
+                                    Clicked="OnReadyDialogYesClicked"
+                                    Style="{StaticResource SuccessButtonStyle}"/>
+                            <Button Text="Not Now"
+                                    Clicked="OnReadyDialogNoClicked"
+                                    Style="{StaticResource DangerButtonStyle}"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Custom Error Dialog Panel -->
+        <Grid x:Name="ErrorDialog"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              ZIndex="200">
+            <Border Background="{StaticResource CardGradient}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Margin="0"
+                    Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="0">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="warning.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="ErrorDialogTitle" Text="Error"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#FF5858"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="ErrorDialogMessage" Text="Something went wrong."
+                               FontSize="16"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="OK"
+                                Clicked="OnErrorDialogClose"
+                                BackgroundColor="#FF5858"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"
+                                Margin="0,16,0,0"
+                                Shadow="{StaticResource FrameShadow}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Custom Success Dialog Panel -->
+        <Grid x:Name="SuccessDialog"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              ZIndex="201">
+            <Border Background="{StaticResource CardGradient}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Margin="0"
+                    Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="0">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="success.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="SuccessDialogTitle" Text="Success"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#00C853"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="SuccessDialogMessage" Text="Operation completed successfully."
+                               FontSize="16"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="OK"
+                                Clicked="OnSuccessDialogClose"
+                                BackgroundColor="#00C853"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"
+                                Margin="0,16,0,0"
+                                Shadow="{StaticResource FrameShadow}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Custom Info Dialog Panel -->
+        <Grid x:Name="InfoDialog"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              ZIndex="202">
+            <Border Background="{StaticResource CardGradient}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Margin="0"
+                    Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="0">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="info.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="InfoDialogTitle" Text="Info"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#2196F3"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="InfoDialogMessage" Text="Some information for you."
+                               FontSize="16"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="OK"
+                                Clicked="OnInfoDialogClose"
+                                BackgroundColor="#2196F3"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"
+                                Margin="0,16,0,0"
+                                Shadow="{StaticResource FrameShadow}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Custom Confirm Dialog Panel -->
+        <Grid x:Name="ConfirmDialog"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              ZIndex="203">
+            <Border Background="{StaticResource CardGradient}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Margin="0"
+                    Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="0">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="question.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="ConfirmDialogTitle" Text="Confirm"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#FFB600"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="ConfirmDialogMessage" Text="Are you sure?"
+                               FontSize="16"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <HorizontalStackLayout Spacing="16" Margin="0,16,0,0" HorizontalOptions="Center">
+                            <Button x:Name="ConfirmDialogYesButton"
+                                    Text="Yes"
+                                    Clicked="OnConfirmDialogYes"
+                                    BackgroundColor="#2196F3"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="16"
+                                    HeightRequest="48"
+                                    WidthRequest="100"
+                                    Shadow="{StaticResource FrameShadow}"/>
+                            <Button x:Name="ConfirmDialogNoButton"
+                                    Text="No"
+                                    Clicked="OnConfirmDialogNo"
+                                    BackgroundColor="#B0B0B0"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="16"
+                                    HeightRequest="48"
+                                    WidthRequest="100"
+                                    Shadow="{StaticResource FrameShadow}"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+    </Grid>
+</ContentPage>

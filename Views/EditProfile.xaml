@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.Views.EditProfile"
+             Title="Edit Profile"
+             BackgroundColor="#F8F9FC">
+
+    <ContentPage.Resources>
+        <!-- Dialog Gradients -->
+        <LinearGradientBrush x:Key="SuccessDialogGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#e0ffe8" Offset="0.0"/>
+            <GradientStop Color="#b2f7c1" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ErrorDialogGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#ffe0e0" Offset="0.0"/>
+            <GradientStop Color="#ffb2b2" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Header Gradient -->
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#1A237E" Offset="0.0"/>
+            <GradientStop Color="#283593" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Shadow effect -->
+        <Shadow x:Key="DialogShadow" Brush="#000000" Offset="0,8" Radius="24" Opacity="0.22"/>
+        <Shadow x:Key="ButtonShadow" Brush="#000000" Offset="0,3" Radius="10" Opacity="0.18"/>
+        <Shadow x:Key="CardShadow" Brush="#000000" Offset="0,4" Radius="12" Opacity="0.15"/>
+        <Shadow x:Key="FrameShadow" Brush="#000000" Offset="0,4" Radius="12" Opacity="0.15"/>
+        <!-- Entry Styles -->
+        <Style x:Key="EntryFrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="BorderColor" Value="#E0E0E0"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Shadow" Value="{StaticResource CardShadow}"/>
+        </Style>
+        <Style x:Key="EntryLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextColor" Value="#1A237E"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+        <Style x:Key="EntryStyle" TargetType="Entry">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextColor" Value="#1A237E"/>
+            <Setter Property="PlaceholderColor" Value="#9FA8DA"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Spacing="25" Padding="20">
+                <!-- Header Section -->
+                <Frame Background="{StaticResource HeaderGradient}" 
+                       CornerRadius="20" 
+                       Padding="20"
+                       Margin="0,10"
+                       HasShadow="True"
+                       Shadow="{StaticResource CardShadow}">
+                    <VerticalStackLayout Spacing="15">
+                        <Frame WidthRequest="100" 
+                               HeightRequest="100" 
+                               CornerRadius="50"
+                               BackgroundColor="White"
+                               Padding="5"
+                               HorizontalOptions="Center">
+                            <Image Source="profilex.png" 
+                                   WidthRequest="90" 
+                                   HeightRequest="90" 
+                                   Aspect="AspectFill"/>
+                        </Frame>
+                        <Label Text="Edit Your Profile"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="#FFD700"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Update your personal information"
+                               FontSize="14"
+                               TextColor="#E8EAF6"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Form Section -->
+                <Frame BackgroundColor="White" 
+                       CornerRadius="20" 
+                       Padding="20"
+                       HasShadow="True"
+                       Shadow="{StaticResource CardShadow}">
+                    <VerticalStackLayout Spacing="20">
+                        <!-- First Name -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="First Name"
+                                   Style="{StaticResource EntryLabelStyle}"/>
+                            <Frame Style="{StaticResource EntryFrameStyle}">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Label Text="👤"
+                                           FontSize="20"
+                                           TextColor="#1A237E"
+                                           VerticalOptions="Center"/>
+                                    <Entry x:Name="FirstNameEntry"
+                                           Grid.Column="1"
+                                           Placeholder="Enter your first name"
+                                           Style="{StaticResource EntryStyle}"
+                                           Margin="10,0,0,0"/>
+                                </Grid>
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Last Name -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Last Name"
+                                   Style="{StaticResource EntryLabelStyle}"/>
+                            <Frame Style="{StaticResource EntryFrameStyle}">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Label Text="👤"
+                                           FontSize="20"
+                                           TextColor="#1A237E"
+                                           VerticalOptions="Center"/>
+                                    <Entry x:Name="LastNameEntry"
+                                           Grid.Column="1"
+                                           Placeholder="Enter your last name"
+                                           Style="{StaticResource EntryStyle}"
+                                           Margin="10,0,0,0"/>
+                                </Grid>
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Password -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Confirm Password"
+                                   Style="{StaticResource EntryLabelStyle}"/>
+                            <Frame Style="{StaticResource EntryFrameStyle}">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Label Text="🔒"
+                                           FontSize="20"
+                                           TextColor="#1A237E"
+                                           VerticalOptions="Center"/>
+                                    <Entry x:Name="PasswordEntry"
+                                           Grid.Column="1"
+                                           Placeholder="Enter your password"
+                                           IsPassword="True"
+                                           Style="{StaticResource EntryStyle}"
+                                           Margin="10,0,0,0"/>
+                                </Grid>
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Save Button -->
+                        <Button Text="Save Changes"
+                                x:Name="SaveButton"
+                                Clicked="OnSaveClicked"
+                                BackgroundColor="#1A237E"
+                                TextColor="#FFD700"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                HeightRequest="50"
+                                CornerRadius="25"
+                                Margin="0,10,0,0"
+                                Shadow="{StaticResource ButtonShadow}"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Custom Error Message Panel -->
+        <Grid x:Name="ErrorPanel"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              ZIndex="200">
+            <Border Background="{StaticResource ErrorDialogGradient}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Margin="0"
+                    Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="10">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="warning.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="ErrorTitle" Text="Error"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#D7263D"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="ErrorMessage" Text="Something went wrong."
+                               FontSize="16"
+                               TextColor="#23243A"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="OK"
+                                Clicked="OnErrorPanelClose"
+                                BackgroundColor="#D7263D"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"
+                                Margin="0,16,0,0"
+                                Shadow="{StaticResource FrameShadow}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Custom Success Dialog Overlay -->
+        <Grid x:Name="SuccessDialog"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              ZIndex="201">
+            <Border Background="{StaticResource SuccessDialogGradient}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Margin="0"
+                    Shadow="{StaticResource CardShadow}">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="15">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="successful.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="SuccessTitle" Text="Success"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#1CB142"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="SuccessMessage" Text="Operation completed successfully."
+                               FontSize="16"
+                               TextColor="#23243A"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="OK"
+                                Clicked="OnSuccessDialogClose"
+                                BackgroundColor="#1CB142"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"
+                                Margin="0,16,0,0"
+                                Shadow="{StaticResource FrameShadow}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

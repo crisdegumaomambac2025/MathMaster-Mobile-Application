@@ -1,0 +1,237 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.Views.EditModalView"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#262525">
+
+    <ContentPage.Resources>
+        <!-- Success Dialog Gradient -->
+        <LinearGradientBrush x:Key="SuccessDialogGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#E6FFF3" Offset="0.0"/>
+            <GradientStop Color="#B6F5D8" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Error Dialog Gradient -->
+        <LinearGradientBrush x:Key="ErrorDialogGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFE6E6" Offset="0.0"/>
+            <GradientStop Color="#FFD6D6" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Dialog Shadow -->
+        <Shadow x:Key="DialogShadow" Brush="#000000" Offset="0,6" Radius="18" Opacity="0.22"/>
+
+        <!-- Gradients and Colors -->
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#3A3F5C" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CardGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#2B5876" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="SaveButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#10B981" Offset="0.0"/>
+            <GradientStop Color="#34D399" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CancelButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#EF4444" Offset="0.0"/>
+            <GradientStop Color="#F87171" Offset="1.0"/>
+        </LinearGradientBrush>
+        <Shadow x:Key="CardShadow" Brush="#000000" Offset="0,4" Radius="12" Opacity="0.25"/>
+        <Shadow x:Key="ButtonShadow" Brush="#000000" Offset="0,2" Radius="8" Opacity="0.18"/>
+        <!-- Font styles -->
+        <Style TargetType="Label" x:Key="TitleLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+        </Style>
+        <Style TargetType="Border" x:Key="FormCardStyle">
+            <Setter Property="Stroke" Value="#FFB600"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="Background" Value="{StaticResource CardGradient}"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle 22"/>
+            <Setter Property="Padding" Value="28,36"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Shadow" Value="{StaticResource CardShadow}"/>
+        </Style>
+        <Style TargetType="Border" x:Key="EntryBorderStyle">
+            <Setter Property="Stroke" Value="#FFB600"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="Background" Value="#F4F4F5"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle 14"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="EntryStyle">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextColor" Value="#18181B"/>
+            <Setter Property="PlaceholderColor" Value="#A1A1AA"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="HeightRequest" Value="48"/>
+            <Setter Property="Margin" Value="8,0,0,0"/>
+        </Style>
+        <Style TargetType="Button" x:Key="SaveButtonStyle">
+            <Setter Property="Background" Value="{StaticResource SaveButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="19"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="HeightRequest" Value="48"/>
+            <Setter Property="Shadow" Value="{StaticResource ButtonShadow}"/>
+        </Style>
+        <Style TargetType="Button" x:Key="CancelButtonStyle">
+            <Setter Property="Background" Value="{StaticResource CancelButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="19"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="HeightRequest" Value="48"/>
+            <Setter Property="Shadow" Value="{StaticResource ButtonShadow}"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <!-- Custom Success Dialog Overlay -->
+        <Grid x:Name="SuccessDialog"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              ZIndex="100">
+            <Border Background="{StaticResource SuccessDialogGradient}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Margin="0"
+                    Shadow="{StaticResource DialogShadow}">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="15">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="successful.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="SuccessTitle" Text="Success"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#1CB142"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="SuccessMessage" Text="Operation completed successfully."
+                               FontSize="16"
+                               TextColor="#23243A"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="Continue"
+                                Clicked="OnSuccessDialogContinue"
+                                BackgroundColor="#1CB142"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"
+                                Margin="0,16,0,0"
+                                Shadow="{StaticResource ButtonShadow}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+        <!-- Custom Error Message Panel -->
+        <Grid x:Name="ErrorPanel"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              ZIndex="99">
+            <Border Background="{StaticResource ErrorDialogGradient}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Margin="0"
+                    Shadow="{StaticResource DialogShadow}">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="10">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="warning.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="ErrorTitle" Text="Error"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#D7263D"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="ErrorMessage" Text="Something went wrong."
+                               FontSize="16"
+                               TextColor="#23243A"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="Try Again"
+                                Clicked="OnErrorPanelClose"
+                                BackgroundColor="#D7263D"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"
+                                Margin="0,16,0,0"
+                                Shadow="{StaticResource ButtonShadow}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="24,48,24,24" Spacing="28">
+                <!-- Header with Close Button -->
+                <Grid ColumnDefinitions="*,Auto" Padding="0,0,0,12" VerticalOptions="Center">
+                    <Label Text="Edit Student"
+                           Style="{StaticResource TitleLabel}"
+                           HorizontalOptions="Start" />
+                    <Label Text="✕"
+                           FontSize="28"
+                           TextColor="#FFB600"
+                           FontFamily="Comic Sans MS"
+                           VerticalOptions="Center"
+                           HorizontalOptions="End"
+                           Padding="8">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCancelClicked"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+
+                <!-- Form Card -->
+                <Border Style="{StaticResource FormCardStyle}">
+                    <VerticalStackLayout Spacing="20">
+                        <Border Style="{StaticResource EntryBorderStyle}">
+                            <Entry x:Name="FirstNameEntry"
+                                   Text="{Binding User.FirstName}"
+                                   Placeholder="First Name"
+                                   Style="{StaticResource EntryStyle}"/>
+                        </Border>
+                        <Border Style="{StaticResource EntryBorderStyle}">
+                            <Entry x:Name="LastNameEntry"
+                                   Text="{Binding User.LastName}"
+                                   Placeholder="Last Name"
+                                   Style="{StaticResource EntryStyle}"/>
+                        </Border>
+                        <Border Style="{StaticResource EntryBorderStyle}">
+                            <Entry x:Name="EmailEntry"
+                                   Text="{Binding User.Email}"
+                                   Placeholder="Email"
+                                   Keyboard="Email"
+                                   Style="{StaticResource EntryStyle}"/>
+                        </Border>
+                        <!-- Buttons -->
+                        <VerticalStackLayout Spacing="14" Margin="0,20,0,0">
+                            <Button Text="Save Changes"
+                                    Style="{StaticResource SaveButtonStyle}"
+                                    Clicked="OnSaveClicked"/>
+                            <Button Text="Cancel"
+                                    Style="{StaticResource CancelButtonStyle}"
+                                    Clicked="OnCancelClicked"/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

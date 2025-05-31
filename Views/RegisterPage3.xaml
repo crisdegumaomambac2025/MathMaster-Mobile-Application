@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.Views.RegisterPage3"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="PageGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#2B5876" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CardGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#363D68" Offset="0.0"/>
+            <GradientStop Color="#23243A" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="RegisterButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#007BFF" Offset="0.0"/>
+            <GradientStop Color="#00C6FF" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="BackButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#6c757d" Offset="0.0"/>
+            <GradientStop Color="#adb5bd" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Dialog Gradients and Shadow -->
+        <LinearGradientBrush x:Key="SuccessDialogGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#e0ffe8" Offset="0.0"/>
+            <GradientStop Color="#b2f7c1" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ErrorDialogGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#ffe0e0" Offset="0.0"/>
+            <GradientStop Color="#ffb2b2" Offset="1.0"/>
+        </LinearGradientBrush>
+        <Shadow x:Key="CardShadow" Brush="#000000" Offset="0,6" Radius="18" Opacity="0.25"/>
+        <Shadow x:Key="ButtonShadow" Brush="#000000" Offset="0,3" Radius="10" Opacity="0.18"/>
+        <Shadow x:Key="DialogShadow" Brush="#000000" Offset="0,8" Radius="24" Opacity="0.22"/>
+        <!-- Font styles -->
+        <Style TargetType="Label" x:Key="TitleLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+        </Style>
+        <Style TargetType="Button" x:Key="RegisterButtonStyle">
+            <Setter Property="Background" Value="{StaticResource RegisterButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="WidthRequest" Value="95"/>
+            <Setter Property="Shadow" Value="{StaticResource ButtonShadow}"/>
+        </Style>
+        <Style TargetType="Button" x:Key="BackButtonStyle">
+            <Setter Property="Background" Value="{StaticResource BackButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="WidthRequest" Value="90"/>
+            <Setter Property="Shadow" Value="{StaticResource ButtonShadow}"/>
+        </Style>
+        <Style TargetType="Frame" x:Key="EntryFrame">
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Shadow" Value="{StaticResource CardShadow}"/>
+            <Setter Property="BackgroundColor" Value="#e9ecef"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="StyledEntry">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="#23243A"/>
+            <Setter Property="PlaceholderColor" Value="#B0B0B0"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="36,0,0,0"/>
+            <Setter Property="HeightRequest" Value="44"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <ScrollView Background="{StaticResource PageGradient}">
+            <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="CenterAndExpand">
+                <!-- Card Frame (Registration Box) -->
+                <Frame Background="{StaticResource CardGradient}" Padding="30" CornerRadius="25"
+                       BorderColor="Transparent"
+                       HorizontalOptions="Center"
+                       WidthRequest="350"
+                       HasShadow="True"
+                       Shadow="{StaticResource CardShadow}">
+                    <VerticalStackLayout Spacing="18">
+                        <Image Source="mathmastericon.png" WidthRequest="60" HorizontalOptions="Center" Margin="0,0,0,8"/>
+
+                        <!-- Subtitle -->
+                        <Label Text="Choose a username and password" FontSize="18" TextColor="#B0B0B0"
+                               FontFamily="Comic Sans MS"
+                               HorizontalOptions="Center" Margin="0,0,0,10"/>
+
+                        <!-- Username Field -->
+                        <Frame Style="{StaticResource EntryFrame}">
+                            <Grid>
+                                <Image Source="user.png" 
+                                    VerticalOptions="Center" 
+                                    HorizontalOptions="Start" 
+                                    WidthRequest="22" 
+                                    HeightRequest="22" Margin="10,0,0,0"/>
+                                <Entry x:Name="UsernameEntry" Placeholder="Username"
+                                       Style="{StaticResource StyledEntry}"/>
+                            </Grid>
+                        </Frame>
+
+                        <!-- Password Field -->
+                        <Frame Style="{StaticResource EntryFrame}">
+                            <Grid>
+                                <Image Source="lock.png" 
+                                    VerticalOptions="Center" 
+                                    HorizontalOptions="Start" 
+                                    WidthRequest="22" 
+                                    HeightRequest="22" Margin="10,0,0,0"/>
+                                <Entry x:Name="PasswordEntry" Placeholder="Password"
+                                       IsPassword="True"
+                                       Style="{StaticResource StyledEntry}"/>
+                            </Grid>
+                        </Frame>
+
+                        <!-- Buttons (Back and Register) -->
+                        <Grid ColumnDefinitions="*, 100" RowDefinitions="Auto">
+                            <!-- Back Button (Left side) -->
+                            <Button Text="Back"
+                                    Clicked="OnBackClicked"
+                                    Style="{StaticResource BackButtonStyle}"
+                                    HorizontalOptions="Start"
+                                    Grid.Column="0"/>
+
+                            <!-- Register Button (Right side) -->
+                            <Button Text="Register"
+                                    Clicked="OnRegisterClicked"
+                                    Style="{StaticResource RegisterButtonStyle}"
+                                    HorizontalOptions="End"
+                                    Grid.Column="1"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Error Dialog Overlay (Redesigned as per reference) -->
+        <Grid x:Name="ErrorPanel"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              Padding="0"
+              RowSpacing="0"
+              ColumnSpacing="0"
+              ZIndex="99"
+              Grid.RowSpan="3">
+            <Border
+                Background="{StaticResource CardGradient}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 28"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="0">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="0" Margin="0,0,0,0">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="warning.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="ErrorTitle" Text="Registration Failed"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#FF5858"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="ErrorMessage" Text="Something went wrong."
+                               FontSize="16"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="Try Again"
+                                Clicked="OnErrorPanelClose"
+                                BackgroundColor="#FF5858"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"
+                                Margin="0,16,0,0"
+                                Shadow="{StaticResource ButtonShadow}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Success Dialog Overlay (Redesigned as per reference) -->
+        <Grid x:Name="SuccessDialog"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              Padding="0"
+              RowSpacing="0"
+              ColumnSpacing="0"
+              ZIndex="101"
+              Grid.RowSpan="3">
+            <Border
+                Background="{StaticResource CardGradient}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 28"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="0">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="0" Margin="0,0,0,0">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="success.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="SuccessTitle" Text="Registration Successful!"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#00C853"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="SuccessMessage" Text="Your account has been created. You can now log in!"
+                               FontSize="16"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="Go to Login"
+                                Clicked="OnSuccessDialogContinue"
+                                BackgroundColor="#00C853"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="16"
+                                HeightRequest="48"
+                                WidthRequest="100"
+                                Margin="0,16,0,0"
+                                Shadow="{StaticResource ButtonShadow}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

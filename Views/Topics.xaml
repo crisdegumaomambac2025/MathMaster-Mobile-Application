@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+             x:Class="MathMaster.Views.Topics"
+             Title="Study Topics">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <LinearGradientBrush x:Key="PageBackground" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#1a237e" Offset="0.0" />
+                <GradientStop Color="#0d47a1" Offset="1.0" />
+            </LinearGradientBrush>
+
+            <LinearGradientBrush x:Key="HeaderBackground" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#ff9800" Offset="0.0" />
+                <GradientStop Color="#f57c00" Offset="1.0" />
+            </LinearGradientBrush>
+
+            <LinearGradientBrush x:Key="CardBackground" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#ffffff" Offset="0.0" />
+                <GradientStop Color="#f5f5f5" Offset="1.0" />
+            </LinearGradientBrush>
+            
+            <Style x:Key="TopicCardStyle" TargetType="Frame">
+                <Setter Property="Background" Value="{StaticResource CardBackground}"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="Margin" Value="15,0,15,20"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="BorderColor" Value="#e0e0e0"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal" />
+                            <VisualState Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.98"/>
+                                    <Setter Property="TranslationY" Value="2"/>
+                                    <Setter Property="BackgroundColor" Value="#fafafa"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="TopicTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#1a237e"/>
+                <Setter Property="Margin" Value="0,0,0,8"/>
+            </Style>
+
+            <Style x:Key="TopicDescriptionStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="TextColor" Value="#424242"/>
+                <Setter Property="Margin" Value="0,0,0,15"/>
+            </Style>
+
+            <Style x:Key="StudyButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#ff9800"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="25"/>
+                <Setter Property="Padding" Value="20,12"/>
+                <Setter Property="Margin" Value="0,0,0,8"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal" />
+                            <VisualState Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#f57c00"/>
+                                    <Setter Property="Scale" Value="0.98"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ResourceLinkStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="#ff9800"/>
+                <Setter Property="FontAttributes" Value="Italic"/>
+                <Setter Property="FontSize" Value="13"/>
+            </Style>
+
+            <!-- Dialog Styles -->
+            <Style x:Key="DialogTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#1a237e"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+
+            <Style x:Key="DialogMessageStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="#424242"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,0,0,15"/>
+            </Style>
+
+            <Style x:Key="DialogButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#ff9800"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="20,8"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal" />
+                            <VisualState Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#f57c00"/>
+                                    <Setter Property="Scale" Value="0.98"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="DialogCancelButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#e0e0e0"/>
+                <Setter Property="TextColor" Value="#424242"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Padding" Value="20,8"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal" />
+                            <VisualState Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#bdbdbd"/>
+                                    <Setter Property="Scale" Value="0.98"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <!-- Dialog Templates -->
+            <DataTemplate x:Key="ReadyDialogTemplate">
+                <Frame BackgroundColor="White" 
+                       CornerRadius="15" 
+                       Padding="20" 
+                       Margin="15"
+                       HasShadow="True" MaximumHeightRequest="300">
+                    <VerticalStackLayout>
+                        <Image Source="review.png" 
+                               HeightRequest="60" 
+                               WidthRequest="60"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Ready to Study?"
+                               Style="{StaticResource DialogTitleStyle}"/>
+                        <Label Text="Would you like to start studying these topics? Choose a topic to begin your learning journey."
+                               Style="{StaticResource DialogMessageStyle}"/>
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                            <Button Text="Yes, Start"
+                                    Style="{StaticResource DialogButtonStyle}"
+                                    Clicked="OnReadyDialogYesClicked"/>
+                            <Button Text="Not Now"
+                                    Style="{StaticResource DialogCancelButtonStyle}"
+                                    Clicked="OnReadyDialogNoClicked"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ErrorDialogTemplate">
+                <Frame BackgroundColor="White" 
+                       CornerRadius="15" 
+                       Padding="20" 
+                       Margin="15"
+                       HasShadow="True"
+                       MaximumWidthRequest="300">
+                    <VerticalStackLayout Spacing="10">
+                        <Image Source="error_icon.png" 
+                               HeightRequest="60" 
+                               WidthRequest="60"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Error"
+                               Style="{StaticResource DialogTitleStyle}"/>
+                        <Label Text="{Binding Message}"
+                               Style="{StaticResource DialogMessageStyle}"/>
+                        <Button Text="OK"
+                                Style="{StaticResource DialogButtonStyle}"
+                                Clicked="OnErrorDialogDismissed"
+                                HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </DataTemplate>
+
+            <DataTemplate x:Key="SuccessDialogTemplate">
+                <Frame BackgroundColor="White" 
+                       CornerRadius="15" 
+                       Padding="20" 
+                       Margin="15"
+                       HasShadow="True"
+                       MaximumWidthRequest="300">
+                    <VerticalStackLayout Spacing="10">
+                        <Image Source="success_icon.png" 
+                               HeightRequest="60" 
+                               WidthRequest="60"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Success!"
+                               Style="{StaticResource DialogTitleStyle}"/>
+                        <Label Text="{Binding Message}"
+                               Style="{StaticResource DialogMessageStyle}"/>
+                        <Button Text="Continue"
+                                Style="{StaticResource DialogButtonStyle}"
+                                Clicked="OnSuccessDialogDismissed"
+                                HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid Background="{StaticResource PageBackground}">
+        <ScrollView>
+            <VerticalStackLayout Spacing="0" Padding="15">
+                <!-- Header Section -->
+                <Frame Background="{StaticResource HeaderBackground}" 
+                       CornerRadius="25" 
+                       Padding="25" 
+                       Margin="15,15,15,30"
+                       HasShadow="True">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Math Study Topics"
+                               FontSize="32"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Choose a topic to begin your learning journey"
+                               FontSize="18"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Mental Math Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="think.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Mental Math" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Master quick calculations and mental arithmetic techniques."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="MentalMath"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Khan Academy"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.khanacademy.org/math/arithmetic/arith-review-mental-math"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Addition and Subtraction Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="blackboard.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Addition and Subtraction" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Learn fundamental operations with whole numbers."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="AdditionSubtraction"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Math is Fun"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathsisfun.com/numbers/addition-subtraction.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Math Playground"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathplayground.com/addition_subtraction.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Multiplication Table Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="multiplication.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Multiplication Table" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Master multiplication facts and patterns."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="Multiplication"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Math is Fun"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathsisfun.com/tables.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Multiplication.com"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.multiplication.com/"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Exponents and Roots Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="square_root.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Exponents and Roots" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Understand powers, square roots, and cube roots. Learn laws of exponents and their applications."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="ExponentsRoots"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Khan Academy"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:rational-exponents-radicals"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Math is Fun"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathsisfun.com/exponent.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Decimals and Fractions Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="fraction.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Decimals and Fractions" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Master decimal operations and fraction arithmetic. Learn conversion between decimals and fractions."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="DecimalsFractions"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Math is Fun"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathsisfun.com/fractions.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Khan Academy"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.khanacademy.org/math/arithmetic/arith-review-decimals"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Algebra Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="algebra.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Algebra" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Learn algebraic expressions, equations, and inequalities. Master solving for variables."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="Algebra"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Khan Academy"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.khanacademy.org/math/algebra"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Math is Fun"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathsisfun.com/algebra/index.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Numbers and Operations Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="operations.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Numbers and Operations" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Explore number systems, properties, and operations. Learn about integers, rational numbers, and real numbers."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="NumbersOperations"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Math is Fun"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathsisfun.com/numbers/index.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Khan Academy"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.khanacademy.org/math/arithmetic-home"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Geometry Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="geometry.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Geometry" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Study shapes, angles, and geometric properties. Learn about triangles, circles, and polygons."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="Geometry"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Khan Academy"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.khanacademy.org/math/geometry"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Math is Fun"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathsisfun.com/geometry/index.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Geometric Solids Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="geometric.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Geometric Solids" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Explore 3D shapes, their properties, and measurements. Learn about volume and surface area."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="GeometricSolids"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Math is Fun"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathsisfun.com/geometry/solid-geometry.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Khan Academy"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.khanacademy.org/math/geometry/hs-geo-solids"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Unit Conversion Card -->
+                <Frame Style="{StaticResource TopicCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15">
+                        <Image Source="conversion_unit.png" 
+                               HeightRequest="40" 
+                               WidthRequest="40"
+                               Grid.RowSpan="3"/>
+                        <Label Text="Unit Conversion" 
+                               Style="{StaticResource TopicTitleStyle}"
+                               Grid.Column="1"/>
+                        <Label Text="Master converting between different units of measurement. Learn metric and imperial systems."
+                               Style="{StaticResource TopicDescriptionStyle}"
+                               Grid.Column="1"
+                               Grid.Row="1"/>
+                        <Button Text="Start Learning" 
+                                Clicked="OnTopicSelected"
+                                CommandParameter="UnitConversion"
+                                Style="{StaticResource StudyButtonStyle}"
+                                Grid.Column="1"
+                                Grid.Row="2"/>
+                        <VerticalStackLayout Grid.Column="2" 
+                                            Grid.RowSpan="3"
+                                            Spacing="4">
+                            <Label Text="Resources" 
+                                   FontAttributes="Italic"
+                                   FontSize="13"
+                                   TextColor="#757575"/>
+                            <Label Text="Math is Fun"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.mathsisfun.com/measure/unit-conversion.html"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="Khan Academy"
+                                   Style="{StaticResource ResourceLinkStyle}">
+                                <controls:Label.GestureRecognizers>
+                                    <controls:TapGestureRecognizer Tapped="OnLinkTapped" CommandParameter="https://www.khanacademy.org/math/cc-fourth-grade-math/imp-measurement-and-data-2/imp-converting-units-of-mass/a/metric-units-of-mass-review"/>
+                                </controls:Label.GestureRecognizers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+    <!-- Loading Overlay -->
+    <Grid x:Name="LoadingOverlay"
+      BackgroundColor="#80000080"
+      IsVisible="False"
+      VerticalOptions="FillAndExpand"
+      HorizontalOptions="FillAndExpand"
+      ZIndex="200">
+        <ActivityIndicator IsRunning="True"
+                       Color="#00C6FF"
+                       WidthRequest="60"
+                       HeightRequest="60"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"/>
+    </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.Views.ManageUsersPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#262525">
+
+    <ContentPage.Resources>
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#3A3F5C" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CardGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#2B5876" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="AddUserButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#10B981" Offset="0.0"/>
+            <GradientStop Color="#34D399" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="EditButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#3B82F6" Offset="0.0"/>
+            <GradientStop Color="#60A5FA" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="DeleteButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#EF4444" Offset="0.0"/>
+            <GradientStop Color="#F87171" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ErrorDialogGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFF3E0" Offset="0.0"/>
+            <GradientStop Color="#FFD6D6" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Shadow effect -->
+        <Shadow x:Key="FrameShadow" Brush="#000000" Offset="0,4" Radius="12" Opacity="0.25"/>
+        <Shadow x:Key="ButtonShadow" Brush="#000000" Offset="0,3" Radius="10" Opacity="0.18"/>
+        <Shadow x:Key="DialogShadow" Brush="#000000" Offset="0,6" Radius="18" Opacity="0.25"/>
+        <!-- Font styles -->
+        <Style TargetType="Label" x:Key="TitleLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+        </Style>
+        <Style TargetType="Frame" x:Key="UserCardFrame">
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="HasShadow" Value="True"/>
+            <Setter Property="Shadow" Value="{StaticResource FrameShadow}"/>
+            <Setter Property="Background" Value="{StaticResource CardGradient}"/>
+            <Setter Property="BorderColor" Value="#FFB600"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+        <Style TargetType="Button" x:Key="AddUserButtonStyle">
+            <Setter Property="Background" Value="{StaticResource AddUserButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="HeightRequest" Value="48"/>
+            <Setter Property="WidthRequest" Value="160"/>
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#000000" Offset="0,2" Radius="8" Opacity="0.18"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="EditButtonStyle">
+            <Setter Property="Background" Value="{StaticResource EditButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="WidthRequest" Value="90"/>
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#000000" Offset="0,2" Radius="8" Opacity="0.18"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="DeleteButtonStyle">
+            <Setter Property="Background" Value="{StaticResource DeleteButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="WidthRequest" Value="90"/>
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#000000" Offset="0,2" Radius="8" Opacity="0.18"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid RowDefinitions="Auto, *, Auto">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Padding="20" Spacing="16" Background="{StaticResource HeaderGradient}">
+            <Label Text="List of Students"
+                   Style="{StaticResource TitleLabel}"
+                   HorizontalOptions="Center" />
+
+            <Button Text="Add New User"
+                    x:Name="AddUserButton"
+                    Clicked="OnAddUserClicked"
+                    Style="{StaticResource AddUserButtonStyle}"
+                    HorizontalOptions="Start" />
+        </VerticalStackLayout>
+
+        <!-- User List -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="16" BackgroundColor="#191C30">
+
+                <CollectionView x:Name="UsersCollectionView" ItemsSource="{Binding UsersList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Style="{StaticResource UserCardFrame}">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="{Binding FirstName}" TextColor="#FFB600" FontAttributes="Bold" FontSize="16" FontFamily="Comic Sans MS"/>
+                                    <Label Text="{Binding LastName}" TextColor="#FFFFFF" FontFamily="Comic Sans MS"/>
+                                    <Label Text="{Binding Username}" TextColor="#B0B0B0" FontFamily="Comic Sans MS"/>
+                                    <Label Text="{Binding Email}" TextColor="#B0B0B0" FontFamily="Comic Sans MS"/>
+
+                                    <HorizontalStackLayout Spacing="10" Margin="0,10,0,0" HorizontalOptions="Center">
+                                        <Button Text="Edit"
+                                                Clicked="OnEditClicked"
+                                                CommandParameter="{Binding Username}"
+                                                Style="{StaticResource EditButtonStyle}" />
+
+                                        <Button Text="Delete"
+                                                Clicked="OnDeleteClicked"
+                                                CommandParameter="{Binding Username}"
+                                                Style="{StaticResource DeleteButtonStyle}" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Footer and Bottom Navigation (Enhanced, .NET 9 compatible, matches AdminPage) -->
+        <Border Grid.Row="2"
+                HeightRequest="80"
+                StrokeThickness="0"
+                Margin="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#23243A" Offset="0.0"/>
+                    <GradientStop Color="#1A237E" Offset="0.5"/>
+                    <GradientStop Color="#FFD700" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Padding="10,0" VerticalOptions="Center" HeightRequest="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Manage Users -->
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="manage_user.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Manage Users" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnManageUsersClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Login History -->
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="history.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Login History" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLoginHistoryClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Ranking -->
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="leaderboard.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Ranking" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRankingClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <!-- Home -->
+                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Border StrokeThickness="0" BackgroundColor="#23243A" HeightRequest="40" WidthRequest="40">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Image Source="home.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center" HorizontalOptions="Center" />
+                    </Border>
+                    <Label Text="Home" FontSize="13" TextColor="#FFFFFF" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnDashboardClicked" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+        <!-- Custom Confirm Delete Panel -->
+        <Grid x:Name="ConfirmDeletePanel"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              Padding="0"
+              RowSpacing="0"
+              ColumnSpacing="0"
+              ZIndex="100"
+              Grid.RowSpan="3">
+            <Border
+                Background="{StaticResource CardGradient}"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 28"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="0">
+                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" Padding="0">
+                    <Grid Padding="0" Margin="0,0,0,0">
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+                            <Image Source="warning.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" Padding="30,0,30,24" HorizontalOptions="Center">
+                        <Label x:Name="ConfirmDeleteTitle" Text="Confirm Delete"
+                               FontSize="22" FontAttributes="Bold"
+                               TextColor="#FF5858"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="ConfirmDeleteMessage" Text="Are you sure you want to delete leaderboard info for this user?"
+                               FontSize="16"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <HorizontalStackLayout Spacing="16" Margin="0,16,0,0" HorizontalOptions="Center">
+                            <Button Text="Yes"
+                                    Clicked="OnConfirmDeleteYes"
+                                    BackgroundColor="#FF5858"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="16"
+                                    HeightRequest="48"
+                                    WidthRequest="100"
+                                    Shadow="{StaticResource FrameShadow}"/>
+                            <Button Text="Cancel"
+                                    Clicked="OnConfirmDeleteCancel"
+                                    BackgroundColor="#B0B0B0"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="16"
+                                    HeightRequest="48"
+                                    WidthRequest="100"
+                                    Shadow="{StaticResource FrameShadow}"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+    <!-- Loading Overlay -->
+    <Grid x:Name="LoadingOverlay"
+          BackgroundColor="#80000080"
+          IsVisible="False"
+          VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand"
+          ZIndex="200">
+        <ActivityIndicator IsRunning="True" Color="#00C6FF" WidthRequest="60" HeightRequest="60" VerticalOptions="Center" HorizontalOptions="Center"/>
+    </Grid>
+    </Grid>
+</ContentPage>

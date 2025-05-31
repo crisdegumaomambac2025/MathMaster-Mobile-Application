@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathMaster.WelcomePage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#191C30">
+
+    <ContentPage.Resources>
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="PageGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#23243A" Offset="0.0"/>
+            <GradientStop Color="#2B5876" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="CardGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#363D68" Offset="0.0"/>
+            <GradientStop Color="#23243A" Offset="1.0"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="GetStartedButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#007BFF" Offset="0.0"/>
+            <GradientStop Color="#00C6FF" Offset="1.0"/>
+        </LinearGradientBrush>
+        <!-- Shadow effect -->
+        <Shadow x:Key="CardShadow" Brush="#000000" Offset="0,6" Radius="18" Opacity="0.25"/>
+        <Shadow x:Key="ButtonShadow" Brush="#000000" Offset="0,3" Radius="10" Opacity="0.18"/>
+        <!-- Font styles -->
+        <Style TargetType="Label" x:Key="TitleLabel">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#FFB600"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#007BFF" Offset="0,2" Radius="8" Opacity="0.5"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="GetStartedButtonStyle">
+            <Setter Property="Background" Value="{StaticResource GetStartedButtonGradient}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="HeightRequest" Value="54"/>
+            <Setter Property="Shadow" Value="{StaticResource ButtonShadow}"/>
+            <Setter Property="Margin" Value="0,10,0,0"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <ScrollView Background="{StaticResource PageGradient}">
+            <Frame Background="{StaticResource CardGradient}" Padding="30" CornerRadius="28"
+                   BorderColor="Transparent"
+                   HorizontalOptions="Center"
+                   HasShadow="True"
+                   Shadow="{StaticResource CardShadow}"
+                   Margin="30,60">
+                <VerticalStackLayout Padding="0" Spacing="24"
+                         VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="FillAndExpand">
+
+                    <!-- App Title -->
+                    <Label Text="Welcome to"
+                           FontSize="20"
+                           TextColor="#B0B0B0"
+                           FontFamily="Comic Sans MS"
+                           HorizontalOptions="Center"/>
+
+                    <Image Source="mathmastericon.png" WidthRequest="100" Margin="0,0,0,0" HorizontalOptions="Center">
+                        <Image.Clip>
+                            <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"/>
+                        </Image.Clip>
+                    </Image>
+
+                    <Label Text="MathMaster"
+                           Style="{StaticResource TitleLabel}"
+                           Margin="0,0,0,0"/>
+
+                    <!-- Tagline -->
+                    <Label Text="Your Ultimate Math Learning Companion"
+                           FontSize="18"
+                           TextColor="#B0B0B0"
+                           FontFamily="Comic Sans MS"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,0,0,10"/>
+
+                    <!-- Core Features Section -->
+                    <Label Text="Core Learning Features"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="#fcba03"
+                           FontFamily="Comic Sans MS"
+                           HorizontalOptions="Center"
+                           Margin="0,0,0,0"/>
+
+                    <!-- Features List -->
+                    <Grid ColumnDefinitions="40, *, 10"
+                          RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                          Padding="10"
+                          Margin="0,0,0,10">
+
+                        <!-- Lessons & Tutorials -->
+                        <Label Grid.Row="0" Grid.Column="0" Text="📘" FontSize="24"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="Lessons and Tutorials – Structured, interactive lessons on topics like calculus, algebra, and statistics."
+                               FontSize="16" TextColor="#FFFFFF" FontFamily="Comic Sans MS"/>
+
+                        <!-- Problem Solver -->
+                        <Label Grid.Row="1" Grid.Column="0" Text="🧮" FontSize="24"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="Problem Solver – Step-by-step solutions for math problems, supporting symbolic and numerical computation."
+                               FontSize="16" TextColor="#FFFFFF" FontFamily="Comic Sans MS"/>
+
+                        <!-- Graphing Calculator -->
+                        <Label Grid.Row="2" Grid.Column="0" Text="📊" FontSize="24"/>
+                        <Label Grid.Row="2" Grid.Column="1" Text="Graphing Calculator – 2D and 3D graphing capabilities using Syncfusion Charts."
+                               FontSize="16" TextColor="#FFFFFF" FontFamily="Comic Sans MS"/>
+
+                        <!-- Quizzes & Tests -->
+                        <Label Grid.Row="3" Grid.Column="0" Text="📝" FontSize="24"/>
+                        <Label Grid.Row="3" Grid.Column="1" Text="Quizzes and Tests – Auto-generated and custom quizzes with multiple-choice, fill-in-the-blanks, and problem-solving."
+                               FontSize="16" TextColor="#FFFFFF" FontFamily="Comic Sans MS"/>
+
+                        <!-- Formula & Theorem Library -->
+                        <Label Grid.Row="4" Grid.Column="0" Text="📖" FontSize="24"/>
+                        <Label Grid.Row="4" Grid.Column="1" Text="Formula and Theorem Library – A quick reference guide for important math formulas and theorems."
+                               FontSize="16" TextColor="#FFFFFF" FontFamily="Comic Sans MS"/>
+                    </Grid>
+
+                    <!-- Get Started Button -->
+                    <Button Text="Get Started"
+                            Clicked="OnGetStartedClicked"
+                            Style="{StaticResource GetStartedButtonStyle}"
+                            HorizontalOptions="Fill"/>
+
+                </VerticalStackLayout>
+            </Frame>
+        </ScrollView>
+
+        <!-- Loading Overlay -->
+        <Grid x:Name="LoadingOverlay"
+              BackgroundColor="#80000080"
+              IsVisible="False"
+              VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand"
+              ZIndex="200">
+            <ActivityIndicator IsRunning="True" Color="#00C6FF" WidthRequest="60" HeightRequest="60" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+    </Grid>
+</ContentPage>
