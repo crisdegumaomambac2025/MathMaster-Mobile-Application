@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SkiaSharp styleable workaround for build error -->
+    <declare-styleable name="SKCanvasView">
+        <attr name="ignorePixelScaling" format="boolean" />
+    </declare-styleable>
+</resources>
